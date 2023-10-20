@@ -10,14 +10,15 @@
 char *read_line(void)
 {
 	char *line = NULL;
-	size_t len = 0;
+	size_t len = 1024;
 
 	if (isatty(STDIN_FILENO))
 		_printf("$ ");
 	fflush(stdout);
-	if (getline(&line, &len, stdin) == -1)
+	if (my_getline(&line, &len, stdin) == -1)
 	{
-		free(line);
+		/*if (line)*/
+		/*	free(line);*/
 		return (NULL);
 	}
 	return (line);
@@ -86,11 +87,13 @@ void process_commands(cmd_t *cmds)
  *
  * Return: Always EXIT_SUCCESS.
  */
-int main(void)
+int main(int argc, char *args[])
 {
 	char *line = NULL;
 	cmd_t *cmds = (cmd_t *)malloc(sizeof(cmd_t));
 
+	(void)argc;
+	(void)args;
 	init_cmdt(cmds);
 	copy_environ(cmds);
 	while (1)

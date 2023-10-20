@@ -55,6 +55,8 @@ void my_strcpy(char *dest, const char *src);
 int my_strcmp(const char *s1, const char *s2);
 int my_atoi(const char *str);
 char *my_strcat(char *dest, const char *src);
+ssize_t my_getline(char **lineptr, size_t *n, FILE *stream);
+char *my_realloc(char *line, size_t *buffer_size);
 
 /* Function prototypes */
 void print_env(void);
@@ -77,5 +79,6 @@ char *my_getenv(const char *name);
 char *rmv_space(char *cmd);
 char *get_cmd(char *str);
 int count_slash(char *str);
+/*char *my_strtok(char *str, const char *delim)*/
 
 #endif
