@@ -63,7 +63,6 @@ void copy_environ(cmd_t *cmds)
 
 	cmds->env[i] = NULL;
 	environ = cmds->env;
-	free(cmds->env);
 }
 
 /**

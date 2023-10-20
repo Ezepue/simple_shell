@@ -1,5 +1,6 @@
 #include "main.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 /**
  * read_line - Read a line of text from the standard input.
@@ -10,19 +11,15 @@ char *read_line(void)
 {
 	char *line = NULL;
 	size_t len = 0;
-	ssize_t gline = 0;
 
 	if (isatty(STDIN_FILENO))
 		_printf("$ ");
 	fflush(stdout);
-	gline = getline(&line, &len, stdin);
-	if (gline == -1)
+	if (getline(&line, &len, stdin) == -1)
 	{
 		free(line);
-		exit(0);
-	}
-	else if (gline == 1 && line[0] == 4)
 		return (NULL);
+	}
 	return (line);
 }
 
@@ -36,13 +33,13 @@ char *read_line(void)
 void tokenize_line(char *line, cmd_t *cmds)
 {
 	int i = 0;
-	char *token = strtok(line, " ");
+	char *token = strtok(line, " \n");
 
 	while (token != NULL)
 	{
 		cmds->argv[i] = my_strdup(token);
 		i++;
-		token = strtok(NULL, " ");
+		token = strtok(NULL, " \n");
 	}
 	cmds->arg_count = i;
 	cmds->argv[i] = NULL;
@@ -96,15 +93,17 @@ int main(void)
 
 	init_cmdt(cmds);
 	copy_environ(cmds);
-
-	cmds->argv = (char **)malloc(1024 * sizeof(char *));
 	while (1)
 	{
+		cmds->argv = (char **)malloc(1024 * sizeof(char *));
 		line = read_line();
 		if (line == NULL)
-			continue;
+		{
+			free(cmds->argv);
+			free_cmdt(cmds);
+			exit(EXIT_SUCCESS);
+		}
 		line = rmv_space(line);
-		line = strtok(line, "\n");
 		tokenize_line(line, cmds);
 		if (cmds->argv[0] == NULL)
 		{
@@ -114,8 +113,6 @@ int main(void)
 		process_commands(cmds);
 		free_args(cmds);
 	}
-	
-    free(cmds->argv);
 	free_cmdt(cmds);
 	return (EXIT_SUCCESS);
 }

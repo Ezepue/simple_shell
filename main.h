@@ -23,6 +23,7 @@ int _putchar(char c);
  * @argv: An array of command arguments.
  * @path_found: Flag indicating whether the command path is found.
  * @setenv: Flag indicating whether a setenv command is present.
+ * @eof: Checks if EOF encountered
  * @arg_count: The number of command arguments.
  */
 typedef struct commands
@@ -32,6 +33,7 @@ typedef struct commands
 	int new_env_count;
 	char **argv;
 	bool path_found;
+	bool eof;
 	bool setenv;
 	int arg_count;
 } cmd_t;
@@ -52,6 +54,7 @@ int my_strlen(const char *s);
 void my_strcpy(char *dest, const char *src);
 int my_strcmp(const char *s1, const char *s2);
 int my_atoi(const char *str);
+char *my_strcat(char *dest, const char *src);
 
 /* Function prototypes */
 void print_env(void);
@@ -62,7 +65,6 @@ void copy_environ(cmd_t *cmds);
 int my_setenv(cmd_t *cmds);
 int my_unsetenv(cmd_t *cmds);
 int my_strncmp(const char *s1, const char *s2, int n);
-char *my_strcat(char *dest, const char *src);
 
 /* Shell */
 char *read_line();
