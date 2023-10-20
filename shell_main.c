@@ -15,7 +15,7 @@ char *read_line(void)
 	if (isatty(STDIN_FILENO))
 		_printf("$ ");
 	fflush(stdout);
-	if (getline(&line, &len, stdin) == -1)
+	if (my_getline(&line, &len, stdin) == -1)
 	{
 		return (NULL);
 	}
@@ -77,6 +77,8 @@ void process_commands(cmd_t *cmds)
 
 /**
  * main - Entry point of the program.
+ * @argc: Argument count
+ * @args: Argument vector
  *
  * This function allocates memory for a cmd_t structure, initializes it,
  * and copies the environment. It then enters an infinite loop where it reads
@@ -91,14 +93,11 @@ int main(int argc, char *args[])
 	cmd_t *cmds = (cmd_t *)malloc(sizeof(cmd_t));
 	bool piped = false;
 
-	(void)argc;
-	(void)args;
 	init_cmdt(cmds);
 	copy_environ(cmds);
 	while (!piped)
 	{
-		cmds->argv = (char **)malloc(1024
-* sizeof(char *));
+		cmds->argv = (char **)malloc(1024 * sizeof(char *));
 		if (argc == 2)
 		{
 			line = readlines(args[1]);
