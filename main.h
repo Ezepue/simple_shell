@@ -6,9 +6,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <fcntl.h>
 #include <string.h>
 #include <sys/wait.h>
 #include <stdarg.h>
+#include <errno.h>
 #include <stdbool.h>
 
 
@@ -81,6 +83,7 @@ char *get_cmd(char *str);
 int count_slash(char *str);
 char *my_strchr(const char *str, int character);
 char *my_strtok(char *str, const char *delim);
+char *readlines(char *arg_1);
 /*char *my_strtok(char *str, const char *delim)*/
 
 #endif

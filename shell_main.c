@@ -91,15 +91,21 @@ int main(int argc, char *args[])
 {
 	char *line = NULL;
 	cmd_t *cmds = (cmd_t *)malloc(sizeof(cmd_t));
+	bool piped = false;
 
 	(void)argc;
 	(void)args;
 	init_cmdt(cmds);
 	copy_environ(cmds);
-	while (1)
+	while (!piped)
 	{
-		cmds->argv = (char **)malloc(1024 * sizeof(char *));
-		line = read_line();
+		if (argc == 2)
+		{
+			line = readlines(args[1]);
+			piped = true;
+		}
+		else
+			line = read_line();
 		if (line == NULL)
 		{
 			free(cmds->argv);
@@ -107,6 +113,7 @@ int main(int argc, char *args[])
 			exit(EXIT_SUCCESS);
 		}
 		line = rmv_space(line);
+		cmds->argv = (char **)malloc(1024 * sizeof(char *));
 		tokenize_line(line, cmds);
 		if (cmds->argv[0] == NULL)
 		{
