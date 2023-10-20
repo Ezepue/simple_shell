@@ -99,6 +99,8 @@ int main(int argc, char *args[])
 	copy_environ(cmds);
 	while (!piped)
 	{
+		cmds->argv = (char **)malloc(1024
+* sizeof(char *));
 		if (argc == 2)
 		{
 			line = readlines(args[1]);
@@ -113,7 +115,6 @@ int main(int argc, char *args[])
 			exit(EXIT_SUCCESS);
 		}
 		line = rmv_space(line);
-		cmds->argv = (char **)malloc(1024 * sizeof(char *));
 		tokenize_line(line, cmds);
 		if (cmds->argv[0] == NULL)
 		{
