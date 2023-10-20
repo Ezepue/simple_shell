@@ -77,6 +77,8 @@ void process_commands(cmd_t *cmds)
 
 /**
  * main - Entry point of the program.
+ * @argc: Argument count
+ * @args: Argument vector
  *
  * This function allocates memory for a cmd_t structure, initializes it,
  * and copies the environment. It then enters an infinite loop where it reads
