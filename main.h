@@ -79,6 +79,8 @@ char *my_getenv(const char *name);
 char *rmv_space(char *cmd);
 char *get_cmd(char *str);
 int count_slash(char *str);
+char *my_strchr(const char *str, int character);
+char *my_strtok(char *str, const char *delim);
 /*char *my_strtok(char *str, const char *delim)*/
 
 #endif

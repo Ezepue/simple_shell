@@ -9,7 +9,7 @@
  */
 char *read_line(void)
 {
-	char *line = NULL;
+	char *line = malloc(1024);
 	size_t len = 1024;
 
 	if (isatty(STDIN_FILENO))
@@ -17,8 +17,6 @@ char *read_line(void)
 	fflush(stdout);
 	if (my_getline(&line, &len, stdin) == -1)
 	{
-		/*if (line)*/
-		/*	free(line);*/
 		return (NULL);
 	}
 	return (line);

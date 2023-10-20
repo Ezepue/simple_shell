@@ -51,37 +51,20 @@ ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
 	int ch;
 	size_t position = 0, buffer_position = 0, buffer_size = *n, bytes_read = 0;
 
-
-	if (line == NULL)
-	{
-		line = (char *)malloc(buffer_size);
-		if (line == NULL)
-		{
-			perror("Memory allocation failed");
-			return (-1);
-		}
-	}
 	while (1)
 	{
 		if (buffer_position >= bytes_read)
 		{
 			bytes_read = read(fileno(stream), buffer, BUFFER_SIZE);
-			if (bytes_read == (size_t)-1)
+			if (bytes_read == 0 && position == 0)
 			{
-				perror("Read error");
 				free(line);
 				return (-1);
 			}
-			if (bytes_read == 0)
+			else if (bytes_read == 0)
 			{
-				if (position == 0)
-				{
-					free(line);
-					return (-1);
-				}
-				else
-					line[position] = '\0';
-					break;
+				line[position] = '\0';
+				break;
 			}
 			buffer_position = 0;
 		}
