@@ -35,7 +35,7 @@ char *command_exists(char *cmd)
 	if (cmd_path == NULL)
 		return (NULL);
 
-	path = my_strtok(cmd_path, ":");
+	path = strtok(cmd_path, ":");
 	while (path != NULL)
 	{
 		int path_len = my_strlen(path);
@@ -55,7 +55,7 @@ char *command_exists(char *cmd)
 			}
 		}
 
-		path = my_strtok(NULL, ":");
+		path = strtok(NULL, ":");
 	}
 	free(cmd_path);
 

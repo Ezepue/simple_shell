@@ -15,7 +15,7 @@ char *read_line(void)
 	if (isatty(STDIN_FILENO))
 		_printf("$ ");
 	fflush(stdout);
-	if (my_getline(&line, &len, stdin) == -1)
+	if (getline(&line, &len, stdin) == -1)
 	{
 		return (NULL);
 	}
